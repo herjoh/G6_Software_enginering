@@ -1,46 +1,80 @@
 package GUI;
 
+
+
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Kunde_GUI{
+public class Kunde_GUI implements ActionListener {
+    private JFrame Kunde_Frame = new JFrame();
+    private JButton Log_out = new JButton("Log Out");
+    private JButton Order = new JButton("Order Car");
+    private JButton ShoppingChart = new JButton("Check your shopping chart");
 
-  public Kunde_GUI(){
+    Kunde_GUI() {
+        Kunde_GUI();
+        Button_Mangament();
+        ButtonActivetes();
+        Read_sql();
+    }
 
-      JFrame kunde_frame = new JFrame("Kunde");
-      JPanel kunde_GUI_panel = new JPanel();
-      kunde_frame.setSize(800,800);
-      kunde_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-      kunde_frame.setVisible(true);
-      kunde_frame.getContentPane().add(kunde_GUI_panel);
+    private void Kunde_GUI() {
+        Kunde_Frame.setTitle("Kunde Side");
+        //Kunde_Frame.setSize(800,800);
+        Kunde_Frame.getContentPane().setLayout(null);
+        Kunde_Frame.setVisible(true);
+        Kunde_Frame.setBounds(400, 100, 800, 800);
+        Kunde_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 
+    private void Button_Mangament() {
+        Log_out.setBounds(150, 200, 150, 80);
+        Order.setBounds(150, 300, 150, 80);
+        ShoppingChart.setBounds(400, 200, 150, 80);
+        Kunde_Frame.add(Log_out);
+        Kunde_Frame.add(Order);
+        Kunde_Frame.add(ShoppingChart);
+        Log_out.addActionListener(this);
+        Order.addActionListener(this);
+        ShoppingChart.addActionListener(this);
+    }
 
-      JLabel labal_1 = new JLabel("This is Kunde GUI");
-      labal_1.setBounds(10,20,80,25);
-      kunde_frame.invalidate();
+    private void Read_sql(){
 
-      JButton LoggOut = new JButton("Log Out");
-      JLabel Log_Out_lable = new JLabel("Kunde Logout");
+    }
 
-      Log_Out_lable.setBounds(10,20,80,25);
-      LoggOut.setBounds(150,20,180,25);
+    private void ButtonActivetes() {
+        Log_out.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Kunde_Frame.dispose();
+                new Gui();
+            }
+        });
+        Order.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Kunde_Frame.getContentPane().setBackground(Color.red);
+            }
+        });
+        ShoppingChart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Kunde_Frame.getContentPane().setBackground(Color.BLUE);
+            }
+        });
+    }
 
-      kunde_GUI_panel.add(LoggOut);
-      kunde_GUI_panel.add(Log_Out_lable);
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-      LoggOut.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-              kunde_frame.dispose();
-              new Gui();
-          }
-      });
-
-
-  }
-  private void Kunde_Interactin(){
-
-  }
-
+    }
 }
+
+
+
+
+

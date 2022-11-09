@@ -1,41 +1,43 @@
 package GUI;
 
+
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Admin_GUI  {
+public class Admin_GUI implements ActionListener {
 
-    public Admin_GUI(){
-        JFrame Admin_frame = new JFrame("Admin");
-        JPanel Admin_GUI_panel = new JPanel();
-        Admin_frame.setSize(800,800);
-        Admin_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        Admin_frame.setVisible(true);
-        Admin_frame.getContentPane().add(Admin_GUI_panel);
+    JFrame Admin_Frame=new JFrame();
+    JButton CommitButton=new JButton("Commit Car Coice");
 
+    Admin_GUI(){
+        Prepare_GUI();
+        Button_Properties();
+    }
 
-        JLabel labal_1 = new JLabel("This is Admin GUI");
-        labal_1.setBounds(10,20,80,25);
-        Admin_frame.invalidate();
+    private void Prepare_GUI(){
+        Admin_Frame.setTitle("Admin Vindu");
+        Admin_Frame.getContentPane().setLayout(null);
+        Admin_Frame.setVisible(true);
+        Admin_Frame.setBounds(400,100,600,700);
+        Admin_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    private void Button_Properties(){
+        CommitButton.setBounds(150,200,150,80);
+        Admin_Frame.add(CommitButton);
+        CommitButton.addActionListener(this);
+    }
 
-        JButton LoggOut = new JButton("Log Out");
-        JLabel Log_Out_lable = new JLabel("Admin Logout");
-
-        Log_Out_lable.setBounds(10,20,80,25);
-        LoggOut.setBounds(150,20,180,25);
-
-        Admin_GUI_panel.add(LoggOut);
-        Admin_GUI_panel.add(Log_Out_lable);
-
-        LoggOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Admin_frame.dispose();
-                new Gui();
-            }
-        });
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //Changing Background Color
+        Admin_Frame.dispose();
+        new Gui();
 
     }
 }
+
+
 
