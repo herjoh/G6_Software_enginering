@@ -10,11 +10,12 @@ import java.awt.event.ActionListener;
 public class Admin_GUI implements ActionListener {
 
     JFrame Admin_Frame=new JFrame();
-    JButton CommitButton=new JButton("Commit Car Coice");
+    JButton LogOut=new JButton("Commit Car Coice");
 
     Admin_GUI(){
         Prepare_GUI();
         Button_Properties();
+        ButtonActivetes();
     }
 
     private void Prepare_GUI(){
@@ -25,19 +26,26 @@ public class Admin_GUI implements ActionListener {
         Admin_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     private void Button_Properties(){
-        CommitButton.setBounds(150,200,150,80);
-        Admin_Frame.add(CommitButton);
-        CommitButton.addActionListener(this);
+        LogOut.setBounds(150,200,150,80);
+        Admin_Frame.add(LogOut);
+        LogOut.addActionListener(this);
     }
 
+    private void ButtonActivetes() {
+        LogOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Admin_Frame.dispose();
+
+                new Gui();
+            }
+        });
+
+
+    }
     @Override
-    public void actionPerformed(ActionEvent e) {
-        //Changing Background Color
-        Admin_Frame.dispose();
-        new Gui();
+    public void actionPerformed (ActionEvent e){
 
     }
 }
-
-
 
