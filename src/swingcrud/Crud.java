@@ -323,6 +323,7 @@ public class Crud extends javax.swing.JFrame {
                 } else {
                     alert("There is no such student", "Update error");
                     clear();
+
                 }
 
             } catch (ClassNotFoundException | SQLException ex) {
