@@ -31,16 +31,16 @@ public class Ny_Crud extends javax.swing.JFrame {
     //slutt deklarering av swing elementer.
 
     private final String[] collumnNames = {"type","name","tbl_name","rootpage","sql"};
-    private final Object[][] data=new Object[5][5];
-    private final String url = "jdbc:sqlite:src/Ny_GUI/DB/uno.db";
+    private String[][] data=new String[5][5];
+    private final String url = "jdbc:sqlite:src/Ny_GUI/DB/karsdb.db";
     public Connection con = getConnection.connect(url);
 
     public Connection sendConnection() {
         return con;
     }
     public Ny_Crud() throws SQLException {
-        data = getNewTableData(readData.viewTable());
-        updateTable();
+        data = getNewTableData(readData.viewTable(con));
+        updateTable(data);
 
         oppdaterButton1.addActionListener(new ActionListener() {
             @Override
@@ -101,6 +101,7 @@ public class Ny_Crud extends javax.swing.JFrame {
 
     public void updateTable(String[][] inputData) throws SQLException {
         table1.setModel(new DefaultTableModel(inputData,collumnNames));
+
     }
 
 

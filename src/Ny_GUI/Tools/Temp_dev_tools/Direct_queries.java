@@ -16,7 +16,7 @@ public class Direct_queries {
             int x = 0;
             while (rs.next()) {
                 output[x] = rs.getString("type");
-                x++;
+               /*/ x++;
                 output[x] = rs.getString("name");
                 x++;
                 output[x] = rs.getString("tbl_name");
@@ -26,6 +26,7 @@ public class Direct_queries {
                 x++;
                 output[x] = rs.getString("sql");
                 x++;
+                /*/
             }
             return output;
 

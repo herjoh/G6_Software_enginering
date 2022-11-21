@@ -7,11 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class DEV_GUI {
     private JTextField textField1;
     private JButton runButton;
     private JPanel QueryPanel;
+    private JTable table1;
 
     private String query = "";
     private Connection con = new Ny_Crud().sendConnection();
@@ -27,9 +29,10 @@ public class DEV_GUI {
 
                 try {
                     newData = new Direct_queries().viewTable(query,con);
-                    new Ny_Crud().getNewTableData(newData);
+                    String[][] output = new Ny_Crud().getNewTableData(newData);
 
-                    new Ny_Crud().
+                    ;
+                    System.out.println(Arrays.deepToString(output));
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
