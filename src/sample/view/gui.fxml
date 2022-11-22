@@ -51,17 +51,17 @@
                 <Label layoutX="74.0" layoutY="217.0" text="Ledig:" />
                 <Label layoutX="51.0" layoutY="253.0" text="Ledigdato:" />
                 <Label layoutX="64.0" layoutY="284.0" text="Regnr:" />
-                <TableView id="output" fx:id="tableid" layoutX="332.0" layoutY="13.0" prefHeight="301.0" prefWidth="418.0">
+                 <TableView id="output" fx:id="tableid" layoutX="332.0" layoutY="13.0" prefHeight="301.0" prefWidth="900.0">
                     <columns>
-                        <TableColumn fx:id="merkeIdColum" prefWidth="75.0" text="merke" />
-                        <TableColumn fx:id="modelIdColum" prefWidth="75.0" text="modell" />
-                        <TableColumn fx:id="eierIdColum"  prefWidth="75.0" text="eier" />
-                        <TableColumn fx:id="årsmodelIdColumn" prefWidth="57.0" text="Årsmodel" />
-                        <TableColumn fx:id="fargeIdColumn" prefWidth="75.0" text="Farge" />
-                        <TableColumn fx:id="områdeIdColumn" prefWidth="73.0" text="Område" />
-                        <TableColumn fx:id="ledigIdColumn" prefWidth="75.0" text="ledighet" />
-                        <TableColumn fx:id="datoIdColumn" prefWidth="73.0" text="Dato" />
-                        <TableColumn fx:id="regnrIdColumn" prefWidth="73.0" text="Regnummer" />
+                        <TableColumn fx:id="merkeIdColum" prefWidth="100.0" text="merke" />
+                        <TableColumn fx:id="modelIdColum" prefWidth="100.0" text="modell" />
+                        <TableColumn fx:id="eierIdColum"  prefWidth="100.0" text="eier" />
+                        <TableColumn fx:id="årsmodelIdColumn" prefWidth="100.0" text="Årsmodel" />
+                        <TableColumn fx:id="fargeIdColumn" prefWidth="100.0" text="Farge" />
+                        <TableColumn fx:id="områdeIdColumn" prefWidth="100.0" text="Område" />
+                        <TableColumn fx:id="ledigIdColumn" prefWidth="100.0" text="ledighet" />
+                        <TableColumn fx:id="datoIdColumn" prefWidth="100.0" text="Dato" />
+                        <TableColumn fx:id="regnrIdColumn" prefWidth="100.0" text="Regnummer" />
                     </columns>
                 </TableView>
                 <ListView fx:id="terminal" layoutX="39.0" layoutY="393.0" prefHeight="118.0" prefWidth="194.0" />
