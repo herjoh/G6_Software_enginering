@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import sample.model.Employee;
 import sample.model.EmployeeDAO;
 import sample.modelV2.Cars;
+import sample.modelV2.CarsDAO;
+import sample.util.DBUtil;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -95,6 +97,22 @@ public class GuiController {
         regnrIdColumn.setCellValueFactory(cellData -> cellData.getValue().regestreringsNummerProperty());
         }
 
+
+
+
+    //Insert an employee to the DB
+    @FXML
+    private void insertCar (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        try {
+            CarsDAO.insertCar(merkefelt.getText(),modellfelt.getText(),eierfelt.getText(),
+                    årsmodellfelt.getAnchor(),fargefelt.getText(),områdefelt.getText(),
+                    ledigfelt.getAnchor(),ledigdatofelt.getText(),regnr.getText());
+
+        } catch (SQLException e) {
+
+            throw e;
+        }
+    }
 
 }
 
