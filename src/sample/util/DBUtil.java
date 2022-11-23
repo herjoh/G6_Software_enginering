@@ -1,5 +1,7 @@
 package sample.util;
 
+
+
 import com.sun.rowset.CachedRowSetImpl;
 
 import java.sql.*;
@@ -9,39 +11,32 @@ import java.sql.*;
  */
 public class DBUtil {
     //Declare JDBC Driver
-    private static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+
 
     //Connection
     private static Connection conn = null;
 
-    //Connection String
-    //String connStr = "jdbc:oracle:thin:Username/Password@IP:Port/SID";
-    //Username=HR, Password=HR, IP=localhost, IP=1521, SID=xe
-    private static final String connStr = "jdbc:sqlite:src/DataBase/karsdb.db.db";
+
+    private static final String connStr = "jdbc:sqlite:src/sample/DataBase/karsdb.db.db";
 
 
     //Connect to DB
-    public static void dbConnect() throws SQLException, ClassNotFoundException {
+    public static void dbConnect() throws SQLException {
         //Setting Oracle JDBC Driver
-        try {
-            Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your Oracle JDBC Driver?");
-            e.printStackTrace();
-            throw e;
-        }
 
-        System.out.println("Oracle JDBC Driver Registered!");
 
         //Establish the Oracle Connection using Connection String
         try {
             conn = DriverManager.getConnection(connStr);
+
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console" + e);
             e.printStackTrace();
             throw e;
         }
     }
+
 
     //Close Connection
     public static void dbDisconnect() throws SQLException {
@@ -50,7 +45,7 @@ public class DBUtil {
                 conn.close();
             }
         } catch (Exception e){
-           throw e;
+            throw e;
         }
     }
 
@@ -63,8 +58,6 @@ public class DBUtil {
         try {
             //Connect to DB (Establish Oracle Connection)
             dbConnect();
-            System.out.println("Select statement: " + queryStmt + "\n");
-
             //Create statement
             stmt = conn.createStatement();
 
@@ -95,6 +88,34 @@ public class DBUtil {
         return crs;
     }
 
+    public static void dbPreparedStatementUpdateString(String query,String regnr,String endring) throws SQLException {
+        try {
+            dbConnect();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1,endring);
+            stmt.setString(2,regnr);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+    }
+
+    public static void dbPreparedStatementUpdateInt(String query,String regnr,int endring) throws SQLException {
+        try {
+            dbConnect();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1,endring);
+            stmt.setString(2,regnr);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+    }
+
     //DB Execute Update (For Update/Insert/Delete) Operation
     public static void dbExecuteUpdate(String sqlStmt) throws SQLException, ClassNotFoundException {
         //Declare statement as null
@@ -119,4 +140,3 @@ public class DBUtil {
         }
     }
 }
-

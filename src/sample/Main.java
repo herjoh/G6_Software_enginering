@@ -6,8 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import sample.modelV2.CarsDAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 //Main class which extends from Application Class
 public class Main extends Application {
@@ -71,7 +73,8 @@ public class Main extends Application {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        CarsDAO.updateCarEier("56608","Ben Dover");
         launch(args);
     }
 }

@@ -10,7 +10,29 @@ import java.sql.SQLException;
 
 public class CarsDAO {
 
+    //*******************************
+    //SELECT an Employee
+    //*******************************
+    public static ObservableList<Cars> searchCar (String regNr) throws SQLException, ClassNotFoundException {
+        //Declare a SELECT statement
+        String selectStmt = "SELECT * FROM cars WHERE regnr="+regNr;
 
+        //Execute SELECT statement
+        try {
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
+
+            //Send ResultSet to the getEmployeeFromResultSet method and get employee object
+            ObservableList<Cars> car = (ObservableList<Cars>) getCarFromResultSet(rsEmp);
+
+            //Return employee object
+            return null;
+        } catch (SQLException e) {
+            System.out.println("While searching an employee with " + regNr + " id, an error occurred: " + e);
+            //Return exception
+            throw e;
+        }
+    }
 
     //Use ResultSet from DB as parameter and set Employee Object's attributes and return employee object.
     private static Cars getCarFromResultSet(ResultSet rs) throws SQLException
@@ -37,7 +59,7 @@ public class CarsDAO {
     //*******************************
     public static ObservableList<Cars> searchEier () throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Eier";
+        String selectStmt = "SELECT * FROM cars";
 
         //Execute SELECT statement
         try {
@@ -56,7 +78,7 @@ public class CarsDAO {
         }
     }
 
-    //Select * from employees operation
+    //Select * from cars operation
     private static ObservableList<Cars> getCarList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declare a observable List which comprises of Employee objects
         ObservableList<Cars> empList = FXCollections.observableArrayList();
@@ -79,22 +101,90 @@ public class CarsDAO {
         //return empList (ObservableList of Employees)
         return empList;
     }
+    //*************************************
+    //DELETE an employee
+    //*************************************
+    public static void deleteCar (String regnr) throws SQLException, ClassNotFoundException {
+        //Declare a DELETE statement
+        String updateStmt =
+                " DELETE FROM cars WHERE regnr ="+ regnr;
+        String sql =
+                "DELETE FROM cars WHERE farge = blaa";
 
+        //Execute UPDATE operation
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
+    public static void updateCarMerke (String regnr, String merke) throws SQLException, ClassNotFoundException {
+        String updateStmt =
+                "UPDATE cars SET merke  = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt,regnr,merke);
+    }
+    public static void updateCarModell (String regnr, String modell) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET modell = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,modell);
+    }
+    public static void updateCarEier (String regnr, String eier) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET eier = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,eier);
+    }
+    public static void updateCarFarge (String regnr, String farge) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET farge = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,farge);
+    }
+    public static void updateCarOmråde (String regnr, String område) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET område = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,område);
+    }
 
+    public static void updateCarledigDato (String regnr, String ledigDato) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET  = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,ledigDato);
+    }
+
+    public static void updateCarLedig (String regnr, String ledig) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET regnr = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,ledig);
+    }
+
+    public static void updateCarÅrsModell (String regnr, int årsModell) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET årsmodell  = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateInt(updateStmt1,regnr,årsModell);
+    }
+
+    public static void updateCarRegnr (String regnr, String nyReg) throws SQLException, ClassNotFoundException {
+        String updateStmt1 =
+                "UPDATE cars SET regnr = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,nyReg);
+    }
     //*************************************
     //INSERT an employee
     //*************************************
-    public static void insertCar (String merke, String model, String eier, Integer årsmodel, String farge, String område,
-                                  int ledighet, String dato, String regestreringsNummer ) throws SQLException, ClassNotFoundException {
+    public static void insertCar (String merke, String modell, String eier, Integer årsmodel, String farge, String område,
+                                  String ledighet, String dato, String regestreringsNummer ) throws SQLException, ClassNotFoundException {
         //Declare a DELETE statement
         String updateStmt =
-                "BEGIN\n" +
-                        "INSERT INTO karsdb\n" +
-                        "(Merke, Model, Eier, Årsmodel, Farge, Område, Ledighet, Dato, Registreringsnummer)\n" +
-                        "VALUES\n" +
-                        "(sequence_employee.nextval, '"+merke+"', '"+model+"','"+eier+"','"+årsmodel+"'," +
-                        " '"+farge+"','"+område+"','"+ledighet+"', '"+dato+"','"+regestreringsNummer+"' );\n" +
-                        "END;";
+                        "INSERT INTO cars (merke, modell, eier, årsmodell, farge, område, tilgjenglig, ledigdato, regnr) VALUES ('"+merke+"', '"+modell+"','"+eier+"','"+årsmodel+"','"+farge+"','"+område+"','"+ledighet+"', '"+dato+"','"+regestreringsNummer+"')";
 
         //Execute DELETE operation
         try {
