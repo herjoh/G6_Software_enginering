@@ -7,26 +7,26 @@ import java.sql.Date;
 public class Cars {
     //Declare Employees Table Columns
     private StringProperty merke;
-    private StringProperty model;
+    private StringProperty modell;
     private StringProperty eier;
     private IntegerProperty årsmodel;
     private StringProperty farge;
     private StringProperty område;
-    private BooleanProperty ledighet;
-    private StringProperty dato;
-    private StringProperty regestreringsNummer;
+    private BooleanProperty tilgjenglig;
+    private StringProperty ledigdato;
+    private StringProperty regnr;
 
     //Constructor
     public Cars() {
         this.merke = new SimpleStringProperty();
-        this.model = new SimpleStringProperty();
+        this.modell = new SimpleStringProperty();
         this.eier = new SimpleStringProperty();
         this.årsmodel = new SimpleIntegerProperty();
         this.farge = new SimpleStringProperty();
         this.område = new SimpleStringProperty();
-        this.ledighet = new SimpleBooleanProperty();
-        this.dato = new SimpleStringProperty();
-        this.regestreringsNummer = new SimpleStringProperty();
+        this.tilgjenglig = new SimpleBooleanProperty();
+        this.ledigdato = new SimpleStringProperty();
+        this.regnr = new SimpleStringProperty();
     }
 
     //Merke
@@ -44,15 +44,15 @@ public class Cars {
 
     //Model
     public String getModel() {
-        return model.get();
+        return modell.get();
     }
 
     public StringProperty modelProperty() {
-        return model;
+        return modell;
     }
 
     public void setModel(String model) {
-        this.model.set(model);
+        this.modell.set(model);
     }
 
     //Eier
@@ -109,41 +109,41 @@ public class Cars {
 
     //Ledighet
     public boolean isLedighet() {
-        return ledighet.get();
+        return tilgjenglig.get();
     }
 
     public BooleanProperty ledighetProperty() {
-        return ledighet;
+        return tilgjenglig;
     }
 
     public void setLedighet(boolean ledighet) {
-        this.ledighet.set(ledighet);
+        this.tilgjenglig.set(ledighet);
     }
 
     //dato
     public String getDato() {
-        return dato.get();
+        return ledigdato.get();
     }
 
     public StringProperty datoProperty() {
-        return dato;
+        return ledigdato;
     }
 
     public void setDato(String dato) {
-        this.dato.set(dato);
+        this.ledigdato.set(dato);
     }
 
     //registreringsnummer
     public String getRegestreringsNummer() {
-        return regestreringsNummer.get();
+        return regnr.get();
     }
 
     public StringProperty regestreringsNummerProperty() {
-        return regestreringsNummer;
+        return regnr;
     }
 
     public void setRegestreringsNummer(String regestreringsNummer) {
-        this.regestreringsNummer.set(regestreringsNummer);
+        this.regnr.set(regestreringsNummer);
     }
 }
 

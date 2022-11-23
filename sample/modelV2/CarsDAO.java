@@ -10,7 +10,29 @@ import java.sql.SQLException;
 
 public class CarsDAO {
 
+    //*******************************
+    //SELECT an Employee
+    //*******************************
+    public static ObservableList<Cars> searchCar (String regNr) throws SQLException, ClassNotFoundException {
+        //Declare a SELECT statement
+        String selectStmt = "SELECT * FROM cars WHERE regnr="+regNr;
 
+        //Execute SELECT statement
+        try {
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
+
+            //Send ResultSet to the getEmployeeFromResultSet method and get employee object
+            ObservableList<Cars> car = (ObservableList<Cars>) getCarFromResultSet(rsEmp);
+
+            //Return employee object
+            return null;
+        } catch (SQLException e) {
+            System.out.println("While searching an employee with " + regNr + " id, an error occurred: " + e);
+            //Return exception
+            throw e;
+        }
+    }
 
     //Use ResultSet from DB as parameter and set Employee Object's attributes and return employee object.
     private static Cars getCarFromResultSet(ResultSet rs) throws SQLException
@@ -97,6 +119,28 @@ public class CarsDAO {
             throw e;
         }
     }
+    //*************************************
+    //UPDATE an employee's email address
+    //*************************************
+    public static void updateCarEier (String regnr, String tilgjengelig) throws SQLException, ClassNotFoundException {
+        //Declare a UPDATE statement
+        String updateStmt1 =
+                "UPDATE cars SET eier = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdate(updateStmt1,regnr,tilgjengelig);
+       /*/ PreparedStatement stmt = DBUtil.getConn().prepareStatement(updateStmt1);
+        stmt.setBoolean(1,tilgjengelig);
+        stmt.setString(2,regnr);
+        DBUtil.dbPreparedStatementUpdate(stmt);/*/
+
+        //Execute UPDATE operation
+        /*/try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
+            System.out.print("Error occurred while UPDATE Operation: " + e);
+            throw e;
+        }/*/
+    }
 
     //*************************************
     //INSERT an employee
@@ -106,12 +150,10 @@ public class CarsDAO {
         //Declare a DELETE statement
         String updateStmt =
                         "INSERT INTO cars (merke, modell, eier, årsmodell, farge, område, tilgjenglig, ledigdato, regnr) VALUES ('"+merke+"', '"+modell+"','"+eier+"','"+årsmodel+"','"+farge+"','"+område+"','"+ledighet+"', '"+dato+"','"+regestreringsNummer+"')";
-        String sql =
-                "INSERT INTO cars(merke,modell,eier,årsmodell,farge,område,tilgjenglig,ledigdato,regnr) VALUES(?,?,?,?,?,?,?,?,?)";
 
         //Execute DELETE operation
         try {
-            DBUtil.dbExecuteUpdate(sql);
+            DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;

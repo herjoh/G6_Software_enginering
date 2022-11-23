@@ -1,8 +1,8 @@
 package sample.util;
 
-import com.sun.rowset.CachedRowSetImpl;
 
-import java.sql.*;
+
+import com.sun.rowset.CachedRowSetImpl;
 
 import java.sql.*;
 
@@ -16,9 +16,7 @@ public class DBUtil {
     //Connection
     private static Connection conn = null;
 
-    //Connection String
-    //String connStr = "jdbc:oracle:thin:Username/Password@IP:Port/SID";
-    //Username=HR, Password=HR, IP=localhost, IP=1521, SID=xe
+
     private static final String connStr = "jdbc:sqlite:src/sample/DataBase/karsdb.db.db";
 
 
@@ -31,12 +29,14 @@ public class DBUtil {
         try {
             conn = DriverManager.getConnection(connStr);
 
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console" + e);
             e.printStackTrace();
             throw e;
         }
     }
+
 
     //Close Connection
     public static void dbDisconnect() throws SQLException {
@@ -58,8 +58,6 @@ public class DBUtil {
         try {
             //Connect to DB (Establish Oracle Connection)
             dbConnect();
-            System.out.println("Select statement: " + queryStmt + "\n");
-
             //Create statement
             stmt = conn.createStatement();
 
@@ -88,6 +86,21 @@ public class DBUtil {
         }
         //Return CachedRowSet
         return crs;
+    }
+
+    public static void dbPreparedStatementUpdate(String query,String regnr,String tilgengelig) throws SQLException {
+        try {
+            dbConnect();
+            System.out.println("s");
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1,tilgengelig);
+            stmt.setString(2,regnr);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
     }
 
     //DB Execute Update (For Update/Insert/Delete) Operation
