@@ -76,7 +76,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        //CarsDAO.updateCarTilgjengelig("aj45002",false);
+        System.out.println("test");
+        DBUtil.dbExecuteQuery("SELECT * from cars");
+        CarsDAO.updateCarEier("aj45002","Stig");
         launch(args);
 
     }

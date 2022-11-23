@@ -90,9 +90,9 @@ public class GuiController {
         årsmodelIdColumn.setCellValueFactory(cellData -> cellData.getValue().årsmodelProperty().asObject());
         fargeIdColumn.setCellValueFactory(cellData -> cellData.getValue().fargeProperty());
         områdeIdColumn.setCellValueFactory(cellData -> cellData.getValue().områdeProperty());
-        ledigIdColumn.setCellValueFactory(cellData -> cellData.getValue().ledighetProperty().asObject());
-        datoIdColumn.setCellValueFactory(cellData -> cellData.getValue().datoProperty());
-        regnrIdColumn.setCellValueFactory(cellData -> cellData.getValue().regestreringsNummerProperty());
+        ledigIdColumn.setCellValueFactory(cellData -> cellData.getValue().tilgjengeligProperty().asObject());
+        datoIdColumn.setCellValueFactory(cellData -> cellData.getValue().ledigDatoProperty());
+        regnrIdColumn.setCellValueFactory(cellData -> cellData.getValue().regnrProperty());
         }
 
 

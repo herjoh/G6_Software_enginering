@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import sample.model.Employee;
 import sample.util.DBUtil;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -43,14 +44,14 @@ public class CarsDAO {
         while (rs.next()) {
             Cars emp = new Cars();
             emp.setMerke(rs.getString("merke"));
-            emp.setModel(rs.getString("modell"));
+            emp.setModell(rs.getString("modell"));
             emp.setEier(rs.getString("eier"));
             emp.setÅrsmodel(rs.getInt("årsmodell"));
             emp.setFarge(rs.getString("farge"));
             emp.setOmråde(rs.getString("område"));
-            emp.setLedighet(rs.getBoolean("tilgjengelig"));
-            emp.setDato(rs.getString("ledigdato"));
-            emp.setRegestreringsNummer(rs.getString("regnr"));
+            emp.setTilgjenglig(rs.getBoolean("tilgjengelig"));
+            emp.setLedigdatoDato(rs.getString("ledigdato"));
+            emp.setRegnr(rs.getString("regnr"));
 
             empList.add(emp);
         }
@@ -91,14 +92,14 @@ public class CarsDAO {
         while (rs.next()) {
             Cars emp = new Cars();
             emp.setMerke(rs.getString("merke"));
-            emp.setModel(rs.getString("modell"));
+            emp.setModell(rs.getString("modell"));
             emp.setEier(rs.getString("eier"));
             emp.setÅrsmodel(rs.getInt("årsmodell"));
             emp.setFarge(rs.getString("farge"));
             emp.setOmråde(rs.getString("område"));
-            emp.setLedighet(rs.getBoolean("tilgjengelig"));
-            emp.setDato(rs.getString("ledigdato"));
-            emp.setRegestreringsNummer(rs.getString("regnr"));
+            emp.setTilgjenglig(rs.getBoolean("tilgjengelig"));
+            emp.setLedigdatoDato(rs.getString("ledigdato"));
+            emp.setRegnr(rs.getString("regnr"));
             //Add employee to the ObservableList
             empList.add(emp);
         }
@@ -109,23 +110,24 @@ public class CarsDAO {
     //*************************************
     //UPDATE an employee's email address
     //*************************************
-    public static void updateCarTilgjengelig (String regnr, Boolean tilgjengelig) throws SQLException, ClassNotFoundException {
+    public static void updateCarEier (String regnr, String tilgjengelig) throws SQLException, ClassNotFoundException {
         //Declare a UPDATE statement
-        String updateStmt =
-
-                        "   UPDATE cars\n" +
-                        "      SET tilgjengelig = '" + tilgjengelig + "'\n" +
-                        "    WHERE regnr = " + regnr + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+        String updateStmt1 =
+                        "UPDATE cars SET eier = ?  "
+                        + "WHERE regnr = ?";
+        DBUtil.dbPreparedStatementUpdate(updateStmt1,regnr,tilgjengelig);
+       /*/ PreparedStatement stmt = DBUtil.getConn().prepareStatement(updateStmt1);
+        stmt.setBoolean(1,tilgjengelig);
+        stmt.setString(2,regnr);
+        DBUtil.dbPreparedStatementUpdate(stmt);/*/
 
         //Execute UPDATE operation
-        try {
+        /*/try {
             DBUtil.dbExecuteUpdate(updateStmt);
         } catch (SQLException e) {
             System.out.print("Error occurred while UPDATE Operation: " + e);
             throw e;
-        }
+        }/*/
     }
 
     //*************************************
