@@ -29,7 +29,7 @@
         </MenuBar>
         <AnchorPane fx:id="leidbilid" layoutX="-27.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="767.0">
             <children>
-                <Button layoutX="255.0" layoutY="427.0" mnemonicParsing="false" text="delete" />
+                <Button fx:id="deleteId" layoutX="255.0" layoutY="427.0" mnemonicParsing="false" onAction="#deleteCar" text="delete" />
                 <Button fx:id="updateid" layoutX="252.0" layoutY="370.0" mnemonicParsing="false" text="update" />
                 <TextField fx:id="merkefelt" layoutX="124.0" layoutY="31.0" promptText="bmw.." />
                 <TextField fx:id="modellfelt" layoutX="124.0" layoutY="62.0" promptText="m3.." />

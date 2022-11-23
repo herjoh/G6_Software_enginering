@@ -44,6 +44,8 @@ public class GuiController {
     @FXML
     private TextField regnr;
     @FXML
+    private TableView tableid;
+    @FXML
     private TableColumn <Cars, String>  merkeIdColum;
     @FXML
     private TableColumn <Cars, String>  modelIdColum;
@@ -97,10 +99,40 @@ public class GuiController {
         regnrIdColumn.setCellValueFactory(cellData -> cellData.getValue().regestreringsNummerProperty());
         }
 
+    //Search all employees
+    @FXML
+    private void searchCars(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        try {
+            //Get all Employees information
+            ObservableList<Cars> empData = CarsDAO.searchEier();
+            //Populate Employees on TableView
+            populateCarsTabele(empData);
+        } catch (SQLException e){
+            System.out.println("Error occurred while getting employees information from DB.\n" + e);
+            throw e;
+        }
+    }
+    //Populate cars for TableView
+    @FXML
+    private void populateCarsTabele (ObservableList<Cars> empData) throws ClassNotFoundException {
+        //Set items to the employeeTable
+        tableid.setItems(empData);
+    }
+    //Delete an employee with a given employee Id from DB
+    @FXML
+    private void deleteCar (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        try {
+            //EmployeeDAO.deleteEmpWithId(empIdText.getText());
+            CarsDAO.deleteCar(regnr.getText());
+
+        } catch (SQLException e) {
+
+            throw e;
+        }
+    }
 
 
-
-    //Insert an employee to the DB
+    //Insert an car to the DB
     @FXML
     private void insertCar (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {

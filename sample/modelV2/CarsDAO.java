@@ -37,7 +37,7 @@ public class CarsDAO {
     //*******************************
     public static ObservableList<Cars> searchEier () throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM Eier";
+        String selectStmt = "SELECT * FROM cars";
 
         //Execute SELECT statement
         try {
@@ -56,7 +56,7 @@ public class CarsDAO {
         }
     }
 
-    //Select * from employees operation
+    //Select * from cars operation
     private static ObservableList<Cars> getCarList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declare a observable List which comprises of Employee objects
         ObservableList<Cars> empList = FXCollections.observableArrayList();
@@ -79,7 +79,24 @@ public class CarsDAO {
         //return empList (ObservableList of Employees)
         return empList;
     }
+    //*************************************
+    //DELETE an employee
+    //*************************************
+    public static void deleteCar (String regnr) throws SQLException, ClassNotFoundException {
+        //Declare a DELETE statement
+        String updateStmt =
+                " DELETE FROM cars WHERE regnr ="+ regnr;
+        String sql =
+                "DELETE FROM cars WHERE farge = blaa";
 
+        //Execute UPDATE operation
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
 
     //*************************************
     //INSERT an employee
@@ -88,14 +105,9 @@ public class CarsDAO {
                                   String ledighet, String dato, String regestreringsNummer ) throws SQLException, ClassNotFoundException {
         //Declare a DELETE statement
         String updateStmt =
-                "BEGIN\n" +
-                        "INSERT INTO karsdb\n" +
-                        "(merke, modell, eier, årsmodell, farge, område, tilgjenglig, ledigdato, regnr)\n" +
-                        "VALUES\n" +
-                        "(sequence_employee.nextval, '"+merke+"', '"+modell+"','"+eier+"','"+årsmodel+"'," +
-                        " '"+farge+"','"+område+"','"+ledighet+"', '"+dato+"','"+regestreringsNummer+"' );\n" +
-                        "END;";
-        String sql = "INSERT INTO cars(merke,modell,eier,årsmodell,farge,område,tilgjenglig,ledigdato,regnr) VALUES(?,?,?,?,?,?,?,?,?)";
+                        "INSERT INTO cars (merke, modell, eier, årsmodell, farge, område, tilgjenglig, ledigdato, regnr) VALUES ('"+merke+"', '"+modell+"','"+eier+"','"+årsmodel+"','"+farge+"','"+område+"','"+ledighet+"', '"+dato+"','"+regestreringsNummer+"')";
+        String sql =
+                "INSERT INTO cars(merke,modell,eier,årsmodell,farge,område,tilgjenglig,ledigdato,regnr) VALUES(?,?,?,?,?,?,?,?,?)";
 
         //Execute DELETE operation
         try {
