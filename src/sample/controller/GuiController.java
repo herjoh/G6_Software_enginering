@@ -206,6 +206,7 @@ public class GuiController {
             System.out.println("Du må skrive inn registreringsnummeret før du kan oppdatere biler.");
         } else {
             while (rs.next()) {
+                System.out.println("yo");
                 if (!Objects.equals(rs.getString(collumnNames[0]), merkefelt.getText())) {CarsDAO.updateCarMerke(regnr.getText(), merkefelt.getText());}
                 if (!Objects.equals(rs.getString(collumnNames[1]), modellfelt.getText())) {CarsDAO.updateCarModell(regnr.getText(), modellfelt.getText());}
                 if (!Objects.equals(rs.getString(collumnNames[2]), eierfelt.getText())) {CarsDAO.updateCarEier(regnr.getText(), eierfelt.getText());}
