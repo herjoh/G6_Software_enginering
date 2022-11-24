@@ -14,8 +14,10 @@ import sample.modelV2.Cars;
 import sample.modelV2.CarsDAO;
 import sample.util.DBUtil;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -116,12 +118,32 @@ public class GuiController {
         }
     }
     //Search all employees
+    private static ObservableList<Cars> getCarFromResultSet(ResultSet rs) throws SQLException
+    {
+        ObservableList<Cars> empList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            Cars emp = new Cars();
+            emp.setMerke(rs.getString("merke"));
+            emp.setModel(rs.getString("modell"));
+            emp.setEier(rs.getString("eier"));
+            emp.setÅrsmodel(rs.getInt("årsmodell"));
+            emp.setFarge(rs.getString("farge"));
+            emp.setOmråde(rs.getString("område"));
+            emp.setLedighet(Boolean.parseBoolean(rs.getString("tilgjenglig")));
+            emp.setDato(rs.getString("ledigdato"));
+            emp.setRegestreringsNummer(rs.getString("regnr"));
+
+            empList.add(emp);
+        }
+        return empList;
+    }
     @FXML
     private void searchCars(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            //Get all Employees information
-            ObservableList<Cars> carData = CarsDAO.searchCars();
-            //Populate Employees on TableView
+            //gjør om resultSet til observable list via funksjonen.
+            ObservableList<Cars> carData =  getCarFromResultSet(DBUtil.dbExecuteQuery("SELECT * from cars"));
+            //legg observableList inn i GUI-tabellen.
             populateCars(carData);
         } catch (SQLException e){
             System.out.println("Error occurred while getting employees information from DB.\n" + e);
@@ -206,16 +228,15 @@ public class GuiController {
             System.out.println("Du må skrive inn registreringsnummeret før du kan oppdatere biler.");
         } else {
             while (rs.next()) {
-                System.out.println("yo");
-                if (!Objects.equals(rs.getString(collumnNames[0]), merkefelt.getText())) {CarsDAO.updateCarMerke(regnr.getText(), merkefelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[1]), modellfelt.getText())) {CarsDAO.updateCarModell(regnr.getText(), modellfelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[2]), eierfelt.getText())) {CarsDAO.updateCarEier(regnr.getText(), eierfelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[3]), årsmodellfelt.getText())) {CarsDAO.updateCarÅrsModell(regnr.getText(), Integer.parseInt(årsmodellfelt.getText()));}
-                if (!Objects.equals(rs.getString(collumnNames[4]), fargefelt.getText())) {CarsDAO.updateCarFarge(regnr.getText(), fargefelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[5]), områdefelt.getText())) {CarsDAO.updateCarOmråde(regnr.getText(), områdefelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[6]), ledigfelt.getText())) {CarsDAO.updateCarLedig(regnr.getText(), ledigfelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[7]), ledigdatofelt.getText())) {CarsDAO.updateCarledigDato(regnr.getText(), ledigdatofelt.getText());}
-                if (!Objects.equals(rs.getString(collumnNames[8]), regnr.getText())) {CarsDAO.updateCarRegnr(regnr.getText(), regnr.getText());}
+                if (!Objects.equals(merkefelt.getText(), "")) {CarsDAO.updateCarMerke(regnr.getText(), merkefelt.getText());}
+                if (!Objects.equals(modellfelt.getText(), "")) {CarsDAO.updateCarModell(regnr.getText(), modellfelt.getText());}
+                if (!Objects.equals(eierfelt.getText(), "")) {CarsDAO.updateCarEier(regnr.getText(), eierfelt.getText());}
+                if (!Objects.equals(årsmodellfelt.getText(), "")) {CarsDAO.updateCarÅrsModell(regnr.getText(), Integer.parseInt(årsmodellfelt.getText()));}
+                if (!Objects.equals(fargefelt.getText(), "")) {CarsDAO.updateCarFarge(regnr.getText(), fargefelt.getText());}
+                if (!Objects.equals(områdefelt.getText(), "")) {CarsDAO.updateCarOmråde(regnr.getText(), områdefelt.getText());}
+                if (!Objects.equals(ledigfelt.getText(), "")) {CarsDAO.updateCarLedig(regnr.getText(), ledigfelt.getText());}
+                if (!Objects.equals(ledigdatofelt.getText(), "")) {CarsDAO.updateCarledigDato(regnr.getText(), ledigdatofelt.getText());}
+                if (!Objects.equals(regnr.getText(), "")) {CarsDAO.updateCarRegnr(regnr.getText(), regnr.getText());}
             }
 
         }
