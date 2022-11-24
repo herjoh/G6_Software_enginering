@@ -99,13 +99,14 @@ public class GuiController {
     private void searchCar (ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
             //Get Employee information
-
-            Cars emp = CarsDAO.searchCar(regnr.getText());
+            Cars car = CarsDAO.searchCar(regnr.getText());
             //Populate Employee on TableView and Display on TextArea
-            populateAndShowEmployee(emp);
+            populateAndShowCar(car);
         } catch (SQLException e) {
             e.printStackTrace();
             //resultArea.setText("Error occurred while getting employee information from DB.\n" + e);
+            System.out.println("Error occurred while getting employee information from DB.\n" + e);
+            System.out.println("Hip Huop.\n" + e);
             throw e;
         }
     }
@@ -114,9 +115,9 @@ public class GuiController {
     private void searchCars(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             //Get all Employees information
-            ObservableList<Cars> empData = CarsDAO.searchCars();
+            ObservableList<Cars> carData = CarsDAO.searchCars();
             //Populate Employees on TableView
-            populateCarsTabele(empData);
+            populateCars(carData);
         } catch (SQLException e){
             System.out.println("Error occurred while getting employees information from DB.\n" + e);
             throw e;
@@ -135,13 +136,34 @@ public class GuiController {
         task.setOnSucceeded(e-> tableid.setItems((ObservableList<Cars>) task.getValue()));
         exec.execute(task);
     }
+
     //Populate cars for TableView
     @FXML
-    private void populateCarsTabele (ObservableList<Cars> empData) throws ClassNotFoundException {
+    private void populateCar (Cars car) throws ClassNotFoundException {
+        //Declare and ObservableList for table view
+        ObservableList<Cars> carData = FXCollections.observableArrayList();
+        //Add employee to the ObservableList
+        carData.add(car);
         //Set items to the employeeTable
-        tableid.setItems(empData);
+        tableid.setItems(carData);
     }
-    //Delete an employee with a given employee Id from DB
+    //Populate Employee for TableView and Display Employee on TextArea
+    @FXML
+    private void populateAndShowCar(Cars car) throws ClassNotFoundException {
+        if (car != null) {
+            populateCar(car);
+            //setEmpInfoToTextArea(emp);
+        } else {
+        System.out.println("Dont exist");
+        }
+    }
+    //Populate Employee
+    @FXML
+    private void populateCars (ObservableList<Cars> carData) throws ClassNotFoundException {
+
+        //Set items to the employeeTable
+        tableid.setItems(carData);
+    }
     @FXML
     private void deleteCar (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -151,26 +173,6 @@ public class GuiController {
         } catch (SQLException e) {
 
             throw e;
-        }
-    }
-    //Populate Employee
-    @FXML
-    private void populateCars (Cars emp) throws ClassNotFoundException {
-        //Declare and ObservableList for table view
-        ObservableList<Cars> empData = FXCollections.observableArrayList();
-        //Add employee to the ObservableList
-        empData.add(emp);
-        //Set items to the employeeTable
-        tableid.setItems(empData);
-    }
-    //Populate Employee for TableView and Display Employee on TextArea
-    @FXML
-    private void populateAndShowEmployee(Cars emp) throws ClassNotFoundException {
-        if (emp != null) {
-            populateCars(emp);
-            //setEmpInfoToTextArea(emp);
-        } else {
-
         }
     }
 

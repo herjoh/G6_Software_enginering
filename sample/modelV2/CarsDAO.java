@@ -1,6 +1,4 @@
 package sample.modelV2;
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.model.Employee;
@@ -16,18 +14,19 @@ public class CarsDAO {
     //*******************************
     public static Cars searchCar (String regNr) throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM cars WHERE regnr="+regNr;
+        String selectStmt = "SELECT * FROM cars WHERE regnr = ?";
 
         //Execute SELECT statement
         try {
             //Get ResultSet from dbExecuteQuery method
             ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
 
+
             //Send ResultSet to the getEmployeeFromResultSet method and get employee object
-            Cars cars = getCarFromResultSet(rsEmp);
+            Cars car = getCarFromResultSet(rsEmp);
 
             //Return employee object
-            return cars;
+            return car;
         } catch (SQLException e) {
             System.out.println("While searching an car with " + regNr + " id, an error occurred: " + e);
             //Return exception
@@ -41,7 +40,7 @@ public class CarsDAO {
         Cars car = null;
         if (rs.next()) {
             car = new Cars();
-            car.setMerke(rs.getString("Perye"));
+            car.setMerke(rs.getString("Merke"));
             car.setModel(rs.getString("Modell"));
             car.setEier(rs.getString("Eier"));
             car.setÅrsmodel(rs.getInt("Årsmodel"));
@@ -60,7 +59,7 @@ public class CarsDAO {
     //*******************************
     public static ObservableList<Cars> searchCars() throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM cars(merke,modell,eier,årsmodell,farge,område,tilgjenglig,ledigdato,regnr)";
+        String selectStmt = "SELECT * FROM cars";
 
         //Execute SELECT statement
         try {
@@ -82,7 +81,7 @@ public class CarsDAO {
     //Select * from cars operation
     private static ObservableList<Cars> getCarList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declare a observable List which comprises of Employee objects
-        ObservableList<Cars> empList = FXCollections.observableArrayList();
+        ObservableList<Cars> carList = FXCollections.observableArrayList();
 
         while (rs.next()) {
             Cars car = new Cars();
@@ -97,10 +96,10 @@ public class CarsDAO {
             car.setRegestreringsNummer(rs.getString("Regnummer"));
 
             //Add employee to the ObservableList
-            empList.add(car);
+            carList.add(car);
         }
         //return empList (ObservableList of Employees)
-        return empList;
+        return carList;
     }
     //*************************************
     //DELETE an employee
