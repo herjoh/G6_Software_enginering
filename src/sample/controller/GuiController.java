@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,15 +12,11 @@ import sample.model.Employee;
 import sample.model.EmployeeDAO;
 import sample.modelV2.Cars;
 import sample.modelV2.CarsDAO;
-import sample.util.DBUtil;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import java.awt.*;
 
 public class GuiController {
 
@@ -45,6 +40,8 @@ public class GuiController {
     private TextField regnr;
     @FXML
     private TableView tableid;
+    @FXML
+    private TextField insert;
     @FXML
     private TableColumn <Cars, String>  merkeIdColum;
     @FXML
@@ -99,26 +96,76 @@ public class GuiController {
         regnrIdColumn.setCellValueFactory(cellData -> cellData.getValue().regestreringsNummerProperty());
         }
 
+    //Search an employee
+    @FXML
+    private void searchCar (ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
+        try {
+            //Get Employee information
+            Cars car = CarsDAO.searchCar(regnr.getText());
+            //Populate Employee on TableView and Display on TextArea
+            populateAndShowCar(car);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //resultArea.setText("Error occurred while getting employee information from DB.\n" + e);
+            System.out.println("Error occurred while getting employee information from DB.\n" + e);
+            System.out.println("Hip Huop.\n" + e);
+            throw e;
+        }
+    }
     //Search all employees
     @FXML
     private void searchCars(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             //Get all Employees information
-            ObservableList<Cars> empData = CarsDAO.searchEier();
+            ObservableList<Cars> carData = CarsDAO.searchCars();
             //Populate Employees on TableView
-            populateCarsTabele(empData);
+            populateCars(carData);
         } catch (SQLException e){
             System.out.println("Error occurred while getting employees information from DB.\n" + e);
             throw e;
         }
     }
+    private void fillCarsTable(ActionEvent event) throws SQLException, ClassNotFoundException {
+        Task<List<Cars>> task = new Task<List<Cars>>(){
+            @Override
+            public ObservableList<Cars> call() throws Exception{
+
+                return CarsDAO.searchCars();
+            }
+        };
+
+        task.setOnFailed(e-> task.getException().printStackTrace());
+        task.setOnSucceeded(e-> tableid.setItems((ObservableList<Cars>) task.getValue()));
+        exec.execute(task);
+    }
+
     //Populate cars for TableView
     @FXML
-    private void populateCarsTabele (ObservableList<Cars> empData) throws ClassNotFoundException {
+    private void populateCar (Cars car) throws ClassNotFoundException {
+        //Declare and ObservableList for table view
+        ObservableList<Cars> carData = FXCollections.observableArrayList();
+        //Add employee to the ObservableList
+        carData.add(car);
         //Set items to the employeeTable
-        tableid.setItems(empData);
+        tableid.setItems(carData);
     }
-    //Delete an employee with a given employee Id from DB
+    //Populate Employee for TableView and Display Employee on TextArea
+    @FXML
+    private void populateAndShowCar(Cars car) throws ClassNotFoundException {
+        if (car != null) {
+            populateCar(car);
+            //setEmpInfoToTextArea(emp);
+        } else {
+        System.out.println("Dont exist");
+        }
+    }
+    //Populate Employee
+    @FXML
+    private void populateCars (ObservableList<Cars> carData) throws ClassNotFoundException {
+
+        //Set items to the employeeTable
+        tableid.setItems(carData);
+    }
     @FXML
     private void deleteCar (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {

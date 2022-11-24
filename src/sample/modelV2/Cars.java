@@ -15,6 +15,7 @@ public class Cars {
     private BooleanProperty tilgjenglig;
     private StringProperty ledigdato;
     private StringProperty regnr;
+    private StringProperty insert;
 
     //Constructor
     public Cars() {
@@ -27,6 +28,7 @@ public class Cars {
         this.tilgjenglig = new SimpleBooleanProperty();
         this.ledigdato = new SimpleStringProperty();
         this.regnr = new SimpleStringProperty();
+        this.insert = new SimpleStringProperty();
     }
 
     //Merke
@@ -144,6 +146,18 @@ public class Cars {
 
     public void setRegestreringsNummer(String regestreringsNummer) {
         this.regnr.set(regestreringsNummer);
+    }
+
+    public String getInsert() {
+        return insert.get();
+    }
+
+    public StringProperty insertProperty() {
+        return insert;
+    }
+
+    public void setInsert(String insert) {
+        this.insert.set(insert);
     }
 }
 

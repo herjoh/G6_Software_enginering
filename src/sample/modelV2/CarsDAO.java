@@ -1,8 +1,7 @@
 package sample.modelV2;
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.model.Employee;
 import sample.util.DBUtil;
 
 import java.sql.ResultSet;
@@ -13,9 +12,9 @@ public class CarsDAO {
     //*******************************
     //SELECT an Employee
     //*******************************
-    public static ObservableList<Cars> searchCar (String regNr) throws SQLException, ClassNotFoundException {
+    public static Cars searchCar (String regnr) throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM cars WHERE regnr="+regNr;
+        String selectStmt = "SELECT regnr FROM cars" ;
 
         //Execute SELECT statement
         try {
@@ -23,12 +22,12 @@ public class CarsDAO {
             ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getEmployeeFromResultSet method and get employee object
-            ObservableList<Cars> car = (ObservableList<Cars>) getCarFromResultSet(rsEmp);
+            Cars car = getCarFromResultSet(rsEmp);
 
             //Return employee object
-            return null;
+            return car;
         } catch (SQLException e) {
-            System.out.println("While searching an employee with " + regNr + " id, an error occurred: " + e);
+            System.out.println("While searching an car with " + regnr + " id, an error occurred: " + e);
             //Return exception
             throw e;
         }
@@ -40,15 +39,15 @@ public class CarsDAO {
         Cars car = null;
         if (rs.next()) {
             car = new Cars();
-            car.setMerke(rs.getString("Merke"));
-            car.setModel(rs.getString("Modell"));
-            car.setEier(rs.getString("Eier"));
-            car.setÅrsmodel(rs.getInt("Årsmodel"));
-            car.setFarge(rs.getString("Farge"));
-            car.setOmråde(rs.getString("Område"));
-            car.setLedighet(rs.getBoolean("Ledighet"));
-            car.setDato(rs.getString("Dato"));
-            car.setRegestreringsNummer(rs.getString("Regnummer"));
+            car.setMerke(rs.getString("merkeIdColum"));
+            car.setModel(rs.getString("modelIdColum"));
+            car.setEier(rs.getString("eierIdColum"));
+            car.setÅrsmodel(rs.getInt("årsmodelIdColumn"));
+            car.setFarge(rs.getString("fargeIdColumn"));
+            car.setOmråde(rs.getString("områdeIdColumn"));
+            car.setLedighet(rs.getBoolean("ledigIdColumn"));
+            car.setDato(rs.getString("datoIdColumn"));
+            car.setRegestreringsNummer(rs.getString("regnrIdColumn"));
 
         }
         return car;
@@ -57,7 +56,7 @@ public class CarsDAO {
     //*******************************
     //SELECT Employees
     //*******************************
-    public static ObservableList<Cars> searchEier () throws SQLException, ClassNotFoundException {
+    public static ObservableList<Cars> searchCars() throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
         String selectStmt = "SELECT * FROM cars";
 
@@ -67,10 +66,10 @@ public class CarsDAO {
             ResultSet rsEmps = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getEmployeeList method and get employee object
-            ObservableList<Cars> empList = getCarList(rsEmps);
+            ObservableList<Cars> carList = getCarList(rsEmps);
 
             //Return employee object
-            return empList;
+            return carList;
         } catch (SQLException e) {
             System.out.println("SQL select operation has been failed: " + e);
             //Return exception
@@ -81,7 +80,7 @@ public class CarsDAO {
     //Select * from cars operation
     private static ObservableList<Cars> getCarList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declare a observable List which comprises of Employee objects
-        ObservableList<Cars> empList = FXCollections.observableArrayList();
+        ObservableList<Cars> carList = FXCollections.observableArrayList();
 
         while (rs.next()) {
             Cars car = new Cars();
@@ -96,10 +95,10 @@ public class CarsDAO {
             car.setRegestreringsNummer(rs.getString("Regnummer"));
 
             //Add employee to the ObservableList
-            empList.add(car);
+            carList.add(car);
         }
         //return empList (ObservableList of Employees)
-        return empList;
+        return carList;
     }
     //*************************************
     //DELETE an employee
@@ -108,6 +107,7 @@ public class CarsDAO {
         //Declare a DELETE statement
         String updateStmt =
                 " DELETE FROM cars WHERE regnr ="+ regnr;
+        //Testing placeholder string, for testing av ulike SQL insetninger
         String sql =
                 "DELETE FROM cars WHERE farge = blaa";
 
