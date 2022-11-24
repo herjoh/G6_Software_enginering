@@ -12,9 +12,12 @@ import sample.model.Employee;
 import sample.model.EmployeeDAO;
 import sample.modelV2.Cars;
 import sample.modelV2.CarsDAO;
+import sample.util.DBUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -192,6 +195,31 @@ public class GuiController {
             throw e;
         }
     }
+
+    @FXML
+    private void updateCar(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        System.out.println(regnr.getText());
+        String[] collumnNames = {"merke", "modell", "eier", "årsmodell", "farge", "område", "tilgjenglig", "ledigdato", "regnr"};
+        ResultSet rs = DBUtil.dbExecuteQuery("SELECT * from cars");
+
+        if (Objects.equals(regnr.getText(), "")) {
+            System.out.println("Du må skrive inn registreringsnummeret før du kan oppdatere biler.");
+        } else {
+            while (rs.next()) {
+                if (!Objects.equals(rs.getString(collumnNames[0]), merkefelt.getText())) {CarsDAO.updateCarMerke(regnr.getText(), merkefelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[1]), modellfelt.getText())) {CarsDAO.updateCarModell(regnr.getText(), modellfelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[2]), eierfelt.getText())) {CarsDAO.updateCarEier(regnr.getText(), eierfelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[3]), årsmodellfelt.getText())) {CarsDAO.updateCarÅrsModell(regnr.getText(), Integer.parseInt(årsmodellfelt.getText()));}
+                if (!Objects.equals(rs.getString(collumnNames[4]), fargefelt.getText())) {CarsDAO.updateCarFarge(regnr.getText(), fargefelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[5]), områdefelt.getText())) {CarsDAO.updateCarOmråde(regnr.getText(), områdefelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[6]), ledigfelt.getText())) {CarsDAO.updateCarLedig(regnr.getText(), ledigfelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[7]), ledigdatofelt.getText())) {CarsDAO.updateCarledigDato(regnr.getText(), ledigdatofelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[8]), regnr.getText())) {CarsDAO.updateCarRegnr(regnr.getText(), regnr.getText());}
+            }
+
+        }
+    }
+
 
 }
 

@@ -39,15 +39,15 @@ public class CarsDAO {
         Cars car = null;
         if (rs.next()) {
             car = new Cars();
-            car.setMerke(rs.getString("merkeIdColum"));
-            car.setModel(rs.getString("modelIdColum"));
-            car.setEier(rs.getString("eierIdColum"));
-            car.setÅrsmodel(rs.getInt("årsmodelIdColumn"));
-            car.setFarge(rs.getString("fargeIdColumn"));
-            car.setOmråde(rs.getString("områdeIdColumn"));
-            car.setLedighet(rs.getBoolean("ledigIdColumn"));
-            car.setDato(rs.getString("datoIdColumn"));
-            car.setRegestreringsNummer(rs.getString("regnrIdColumn"));
+            car.setMerke(rs.getString("merke"));
+            car.setModel(rs.getString("modell"));
+            car.setEier(rs.getString("eier"));
+            car.setÅrsmodel(rs.getInt("årsmodell"));
+            car.setFarge(rs.getString("farge"));
+            car.setOmråde(rs.getString("område"));
+            car.setLedighet(rs.getBoolean("ledigdato"));
+            car.setDato(rs.getString("dato"));
+            car.setRegestreringsNummer(rs.getString("regnr"));
 
         }
         return car;
