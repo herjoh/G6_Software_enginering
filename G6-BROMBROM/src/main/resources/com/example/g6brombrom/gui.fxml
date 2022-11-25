@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.g6brombrom.GUIController">
+    <children>
+        <BorderPane layoutX="164.0" layoutY="28.0" prefHeight="0.0" prefWidth="200.0" />
+        <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1.0" prefWidth="200.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane fx:id="leidbilid" layoutX="-27.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="767.0">
+            <children>
+                <Button fx:id="deleteId" layoutX="390.0" layoutY="370.0" mnemonicParsing="false" onAction="#deleteCar" text="delete" />
+                <Button fx:id="updateid" layoutX="252.0" layoutY="370.0" mnemonicParsing="false" onAction="#updateCar" text="update" />
+                <TextField fx:id="merkefelt" layoutX="124.0" layoutY="31.0" promptText="bmw.." />
+                <TextField fx:id="modellfelt" layoutX="124.0" layoutY="62.0" promptText="m3.." />
+                <TextField fx:id="eierfelt" layoutX="124.0" layoutY="93.0" promptText="john adolph.." />
+                <TextField fx:id="årsmodellfelt" layoutX="124.0" layoutY="124.0" promptText="1995.." />
+                <TextField fx:id="fargefelt" layoutX="124.0" layoutY="155.0" promptText="gul.." />
+                <TextField fx:id="insert" layoutX="252.0" layoutY="400.0" promptText="updatd or search..." />
+                <TextField id="områdefelt" fx:id="områdefelt" layoutX="124.0" layoutY="186.0" promptText="østerrike.." />
+                <TextField id="ledigfelt" fx:id="ledigfelt" layoutX="124.0" layoutY="217.0" promptText="ja.." />
+                <TextField fx:id="ledigdatofelt" layoutX="124.0" layoutY="248.0" promptText="24.12.2022.." />
+                <TextField fx:id="regnr" layoutX="124.0" layoutY="279.0" promptText="ww21942" />
+                <Button fx:id="leibilid_2" layoutX="450.0" layoutY="370.0" mnemonicParsing="false" text="lei bil" />
+                <Button fx:id="searchCars" layoutX="450.0" layoutY="430.0" mnemonicParsing="false" onAction="#searchCars" text="View Cars In Table" />
+                <Button fx:id="addbilid" layoutX="325.0" layoutY="370.0" mnemonicParsing="false" onAction="#insertCar" text="addbil" />
+                <Label layoutX="71.0" layoutY="36.0" text="Merke:" />
+                <Label layoutX="71.0" layoutY="67.0" text="Modell:" />
+                <Label layoutX="75.0" layoutY="93.0" text="Eier:" />
+                <Label layoutX="50.0" layoutY="124.0" text="Årsmodell:" />
+                <Label layoutX="65.0" layoutY="155.0" text="Farge:" />
+                <Label layoutX="60.0" layoutY="191.0" text="Område:" />
+                <Label layoutX="74.0" layoutY="217.0" text="Ledig:" />
+                <Label layoutX="51.0" layoutY="253.0" text="Ledigdato:" />
+                <Label layoutX="64.0" layoutY="284.0" text="Regnr:" />
+                <TableView id="output" fx:id="tableid" layoutX="332.0" layoutY="13.0" prefHeight="301.0" prefWidth="900.0">
+                    <columns>
+                        <TableColumn fx:id="merkeIdColum" prefWidth="100.0" text="Merke" />
+                        <TableColumn fx:id="modelIdColum" prefWidth="100.0" text="Modell" />
+                        <TableColumn fx:id="eierIdColum"  prefWidth="100.0" text="Eier" />
+                        <TableColumn fx:id="årsmodelIdColumn" prefWidth="100.0" text="Årsmodel" />
+                        <TableColumn fx:id="fargeIdColumn" prefWidth="100.0" text="Farge" />
+                        <TableColumn fx:id="områdeIdColumn" prefWidth="100.0" text="Område" />
+                        <TableColumn fx:id="ledigIdColumn" prefWidth="100.0" text="Ledighet" />
+                        <TableColumn fx:id="datoIdColumn" prefWidth="100.0" text="Dato" />
+                        <TableColumn fx:id="regnrIdColumn" prefWidth="100.0" text="Regnummer" />
+                    </columns>
+                </TableView>
+                <ListView fx:id="terminal" layoutX="39.0" layoutY="393.0" prefHeight="118.0" prefWidth="194.0" />
+                <Separator layoutX="322.0" layoutY="4.0" orientation="VERTICAL" prefHeight="200.0" />
+                <ToggleButton fx:id="admintext" layoutX="39.0" layoutY="355.0" mnemonicParsing="false" text="Admin" />
+                <ListView fx:id="leidbilid_3" layoutX="567.0" layoutY="344.0" prefHeight="167.0" prefWidth="187.0" />
+                <Label layoutX="92.0" layoutY="517.0" text="Termina vindul" />
+                <Label layoutX="411.0" layoutY="317.0" text="Database" />
+                <Separator layoutX="507.0" layoutY="326.0" prefWidth="200.0" />
+                <Label layoutX="541.0" layoutY="517.0" text="Liste over leide biler" />
+                <CheckBox layoutX="247.0" layoutY="334.0" mnemonicParsing="false" text="Er info korrekt?" />
+                <ToggleButton fx:id="brukertoggle" layoutX="110.0" layoutY="355.0" mnemonicParsing="false" text="Bruker" />
+                <Separator layoutX="322.0" layoutY="117.0" orientation="VERTICAL" prefHeight="200.0" />
+                <Separator layoutX="27.0" layoutY="343.0" prefHeight="3.0" prefWidth="210.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
