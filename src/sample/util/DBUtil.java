@@ -100,6 +100,7 @@ public class DBUtil {
             System.out.println(e);
 
         }
+        dbDisconnect();
     }
 
     public static void dbPreparedStatementUpdateInt(String query,String regnr,int endring) throws SQLException {
@@ -114,6 +115,7 @@ public class DBUtil {
             System.out.println(e);
 
         }
+        dbDisconnect();
     }
 
     //DB Execute Update (For Update/Insert/Delete) Operation

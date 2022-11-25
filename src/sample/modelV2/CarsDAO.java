@@ -1,7 +1,6 @@
 package sample.modelV2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.model.Employee;
 import sample.util.DBUtil;
 
 import java.sql.ResultSet;
@@ -9,49 +8,6 @@ import java.sql.SQLException;
 
 public class CarsDAO {
 
-    //*******************************
-    //SELECT an Employee
-    //*******************************
-    public static Cars searchCar (String regnr) throws SQLException, ClassNotFoundException {
-        //Declare a SELECT statement
-        String selectStmt = "SELECT regnr FROM cars" ;
-
-        //Execute SELECT statement
-        try {
-            //Get ResultSet from dbExecuteQuery method
-            ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
-
-            //Send ResultSet to the getEmployeeFromResultSet method and get employee object
-            Cars car = getCarFromResultSet(rsEmp);
-
-            //Return employee object
-            return car;
-        } catch (SQLException e) {
-            System.out.println("While searching an car with " + regnr + " id, an error occurred: " + e);
-            //Return exception
-            throw e;
-        }
-    }
-
-    //Use ResultSet from DB as parameter and set Employee Object's attributes and return employee object.
-    private static Cars getCarFromResultSet(ResultSet rs) throws SQLException
-    {
-        Cars car = null;
-        if (rs.next()) {
-            car = new Cars();
-            car.setMerke(rs.getString("merke"));
-            car.setModel(rs.getString("modell"));
-            car.setEier(rs.getString("eier"));
-            car.setÅrsmodel(rs.getInt("årsmodell"));
-            car.setFarge(rs.getString("farge"));
-            car.setOmråde(rs.getString("område"));
-            car.setLedighet(rs.getBoolean("ledigdato"));
-            car.setDato(rs.getString("dato"));
-            car.setRegestreringsNummer(rs.getString("regnr"));
-
-        }
-        return car;
-    }
 
     //*******************************
     //SELECT Employees
@@ -77,6 +33,7 @@ public class CarsDAO {
         }
     }
 
+
     //Select * from cars operation
     private static ObservableList<Cars> getCarList(ResultSet rs) throws SQLException, ClassNotFoundException {
         //Declare a observable List which comprises of Employee objects
@@ -85,13 +42,13 @@ public class CarsDAO {
         while (rs.next()) {
             Cars car = new Cars();
             car.setMerke(rs.getString("Merke"));
-            car.setModel(rs.getString("Modell"));
+            car.setModell(rs.getString("Modell"));
             car.setEier(rs.getString("Eier"));
-            car.setÅrsmodel(rs.getInt("Årsmodel"));
+            car.setÅrsmodell(rs.getInt("Årsmodel"));
             car.setFarge(rs.getString("Farge"));
             car.setOmråde(rs.getString("Område"));
-            car.setLedighet(rs.getBoolean("Ledighet"));
-            car.setDato(rs.getString("Dato"));
+            car.setTilgjenglig(rs.getBoolean("Ledighet"));
+            car.setledigdato(rs.getString("Dato"));
             car.setRegestreringsNummer(rs.getString("Regnummer"));
 
             //Add employee to the ObservableList
@@ -100,6 +57,7 @@ public class CarsDAO {
         //return empList (ObservableList of Employees)
         return carList;
     }
+
     //*************************************
     //DELETE an employee
     //*************************************
@@ -119,6 +77,9 @@ public class CarsDAO {
             throw e;
         }
     }
+
+    //Update car
+
     public static void updateCarMerke (String regnr, String merke) throws SQLException, ClassNotFoundException {
         String updateStmt =
                 "UPDATE cars SET merke  = ?  "
@@ -149,28 +110,24 @@ public class CarsDAO {
                         + "WHERE regnr = ?";
         DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,område);
     }
-
     public static void updateCarledigDato (String regnr, String ledigDato) throws SQLException, ClassNotFoundException {
         String updateStmt1 =
                 "UPDATE cars SET  = ?  "
                         + "WHERE regnr = ?";
         DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,ledigDato);
     }
-
     public static void updateCarLedig (String regnr, String ledig) throws SQLException, ClassNotFoundException {
         String updateStmt1 =
                 "UPDATE cars SET regnr = ?  "
                         + "WHERE regnr = ?";
         DBUtil.dbPreparedStatementUpdateString(updateStmt1,regnr,ledig);
     }
-
     public static void updateCarÅrsModell (String regnr, int årsModell) throws SQLException, ClassNotFoundException {
         String updateStmt1 =
                 "UPDATE cars SET årsmodell  = ?  "
                         + "WHERE regnr = ?";
         DBUtil.dbPreparedStatementUpdateInt(updateStmt1,regnr,årsModell);
     }
-
     public static void updateCarRegnr (String regnr, String nyReg) throws SQLException, ClassNotFoundException {
         String updateStmt1 =
                 "UPDATE cars SET regnr = ?  "

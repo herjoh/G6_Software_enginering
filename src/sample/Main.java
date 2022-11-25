@@ -26,13 +26,13 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
 
         //Optional: Set a title for primary stage
-        this.primaryStage.setTitle("SW Test Academy - Sample JavaFX App");
+        this.primaryStage.setTitle("Brum Brum Bil");
 
         //2) Initialize RootLayout
         initRootLayout();
 
         //3) Display the EmployeeOperations View
-        showEmployeeView();
+        showCarView();
     }
 
     //Initializes the root layout.
@@ -58,8 +58,8 @@ public class Main extends Application {
         }
     }
 
-    //Shows the employee operations view inside the root layout.
-    public void showEmployeeView() {
+    //Shows the car view inside the root layout.
+    public void showCarView() {
         try {
             //First, load EmployeeView from EmployeeView.fxml
             FXMLLoader loader = new FXMLLoader();
@@ -74,7 +74,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        CarsDAO.updateCarEier("56608","Ben Dover");
+
         launch(args);
     }
 }

@@ -15,6 +15,8 @@ public class Cars {
     private BooleanProperty tilgjenglig;
     private StringProperty ledigdato;
     private StringProperty regnr;
+
+    //For inserting search & Update queries
     private StringProperty insert;
 
     //Constructor
@@ -28,6 +30,7 @@ public class Cars {
         this.tilgjenglig = new SimpleBooleanProperty();
         this.ledigdato = new SimpleStringProperty();
         this.regnr = new SimpleStringProperty();
+
         this.insert = new SimpleStringProperty();
     }
 
@@ -45,15 +48,15 @@ public class Cars {
     }
 
     //Model
-    public String getModel() {
+    public String getModell() {
         return modell.get();
     }
 
-    public StringProperty modelProperty() {
+    public StringProperty modellProperty() {
         return modell;
     }
 
-    public void setModel(String model) {
+    public void setModell(String model) {
         this.modell.set(model);
     }
 
@@ -75,11 +78,11 @@ public class Cars {
         return årsmodel.get();
     }
 
-    public IntegerProperty årsmodelProperty() {
+    public IntegerProperty årsmodellProperty() {
         return årsmodel;
     }
 
-    public void setÅrsmodel(int årsmodel) {
+    public void setÅrsmodell(int årsmodel) {
         this.årsmodel.set(årsmodel);
     }
 
@@ -114,11 +117,11 @@ public class Cars {
         return tilgjenglig.get();
     }
 
-    public BooleanProperty ledighetProperty() {
+    public BooleanProperty tilgjengligProperty() {
         return tilgjenglig;
     }
 
-    public void setLedighet(boolean ledighet) {
+    public void setTilgjenglig(boolean ledighet) {
         this.tilgjenglig.set(ledighet);
     }
 
@@ -127,11 +130,11 @@ public class Cars {
         return ledigdato.get();
     }
 
-    public StringProperty datoProperty() {
+    public StringProperty ledigdatoProperty() {
         return ledigdato;
     }
 
-    public void setDato(String dato) {
+    public void setledigdato(String dato) {
         this.ledigdato.set(dato);
     }
 

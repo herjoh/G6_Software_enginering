@@ -14,10 +14,8 @@ import sample.modelV2.Cars;
 import sample.modelV2.CarsDAO;
 import sample.util.DBUtil;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -91,53 +89,17 @@ public class GuiController {
         });
 
         merkeIdColum.setCellValueFactory(cellData -> cellData.getValue().merkeProperty());
-        modelIdColum.setCellValueFactory(cellData -> cellData.getValue().modelProperty());
+        modelIdColum.setCellValueFactory(cellData -> cellData.getValue().modellProperty());
         eierIdColum.setCellValueFactory(cellData -> cellData.getValue().eierProperty());
-        årsmodelIdColumn.setCellValueFactory(cellData -> cellData.getValue().årsmodelProperty().asObject());
+        årsmodelIdColumn.setCellValueFactory(cellData -> cellData.getValue().årsmodellProperty().asObject());
         fargeIdColumn.setCellValueFactory(cellData -> cellData.getValue().fargeProperty());
         områdeIdColumn.setCellValueFactory(cellData -> cellData.getValue().områdeProperty());
-        ledigIdColumn.setCellValueFactory(cellData -> cellData.getValue().ledighetProperty().asObject());
-        datoIdColumn.setCellValueFactory(cellData -> cellData.getValue().datoProperty());
+        ledigIdColumn.setCellValueFactory(cellData -> cellData.getValue().tilgjengligProperty().asObject());
+        datoIdColumn.setCellValueFactory(cellData -> cellData.getValue().ledigdatoProperty());
         regnrIdColumn.setCellValueFactory(cellData -> cellData.getValue().regestreringsNummerProperty());
         }
 
-    //Search an employee
-    @FXML
-    private void searchCar (ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
-        try {
-            //Get Employee information
-            Cars car = CarsDAO.searchCar(regnr.getText());
-            //Populate Employee on TableView and Display on TextArea
-            populateAndShowCar(car);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            //resultArea.setText("Error occurred while getting employee information from DB.\n" + e);
-            System.out.println("Error occurred while getting employee information from DB.\n" + e);
-            System.out.println("Hip Huop.\n" + e);
-            throw e;
-        }
-    }
-    //Search all employees
-    private static ObservableList<Cars> getCarFromResultSet(ResultSet rs) throws SQLException
-    {
-        ObservableList<Cars> empList = FXCollections.observableArrayList();
 
-        while (rs.next()) {
-            Cars emp = new Cars();
-            emp.setMerke(rs.getString("merke"));
-            emp.setModel(rs.getString("modell"));
-            emp.setEier(rs.getString("eier"));
-            emp.setÅrsmodel(rs.getInt("årsmodell"));
-            emp.setFarge(rs.getString("farge"));
-            emp.setOmråde(rs.getString("område"));
-            emp.setLedighet(Boolean.parseBoolean(rs.getString("tilgjenglig")));
-            emp.setDato(rs.getString("ledigdato"));
-            emp.setRegestreringsNummer(rs.getString("regnr"));
-
-            empList.add(emp);
-        }
-        return empList;
-    }
     @FXML
     private void searchCars(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -150,40 +112,27 @@ public class GuiController {
             throw e;
         }
     }
-    private void fillCarsTable(ActionEvent event) throws SQLException, ClassNotFoundException {
-        Task<List<Cars>> task = new Task<List<Cars>>(){
-            @Override
-            public ObservableList<Cars> call() throws Exception{
+    private static ObservableList<Cars> getCarFromResultSet(ResultSet rs) throws SQLException
+    {
+        ObservableList<Cars> empList = FXCollections.observableArrayList();
 
-                return CarsDAO.searchCars();
-            }
-        };
+        while (rs.next()) {
+            Cars emp = new Cars();
+            emp.setMerke(rs.getString("merke"));
+            emp.setModell(rs.getString("modell"));
+            emp.setEier(rs.getString("eier"));
+            emp.setÅrsmodell(rs.getInt("årsmodell"));
+            emp.setFarge(rs.getString("farge"));
+            emp.setOmråde(rs.getString("område"));
+            emp.setTilgjenglig(Boolean.parseBoolean(rs.getString("tilgjenglig")));
+            emp.setledigdato(rs.getString("ledigdato"));
+            emp.setRegestreringsNummer(rs.getString("regnr"));
 
-        task.setOnFailed(e-> task.getException().printStackTrace());
-        task.setOnSucceeded(e-> tableid.setItems((ObservableList<Cars>) task.getValue()));
-        exec.execute(task);
-    }
-
-    //Populate cars for TableView
-    @FXML
-    private void populateCar (Cars car) throws ClassNotFoundException {
-        //Declare and ObservableList for table view
-        ObservableList<Cars> carData = FXCollections.observableArrayList();
-        //Add employee to the ObservableList
-        carData.add(car);
-        //Set items to the employeeTable
-        tableid.setItems(carData);
-    }
-    //Populate Employee for TableView and Display Employee on TextArea
-    @FXML
-    private void populateAndShowCar(Cars car) throws ClassNotFoundException {
-        if (car != null) {
-            populateCar(car);
-            //setEmpInfoToTextArea(emp);
-        } else {
-        System.out.println("Dont exist");
+            empList.add(emp);
         }
+        return empList;
     }
+
     //Populate Employee
     @FXML
     private void populateCars (ObservableList<Cars> carData) throws ClassNotFoundException {
@@ -207,16 +156,20 @@ public class GuiController {
     //Insert an car to the DB
     @FXML
     private void insertCar (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        try {
-            CarsDAO.insertCar(merkefelt.getText(),modellfelt.getText(),eierfelt.getText(),
-                    årsmodellfelt.getAnchor(),fargefelt.getText(),områdefelt.getText(),
-                    ledigfelt.getText(),ledigdatofelt.getText(),regnr.getText());
 
+
+        try {
+            CarsDAO.insertCar(merkefelt.getText(), modellfelt.getText(), eierfelt.getText(),
+                    årsmodellfelt.getAnchor(), fargefelt.getText(), områdefelt.getText(),
+                    ledigfelt.getText(), ledigdatofelt.getText(), regnr.getText());
         } catch (SQLException e) {
 
             throw e;
         }
     }
+
+
+
 
     @FXML
     private void updateCar(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -228,15 +181,15 @@ public class GuiController {
             System.out.println("Du må skrive inn registreringsnummeret før du kan oppdatere biler.");
         } else {
             while (rs.next()) {
-                if (!Objects.equals(merkefelt.getText(), "")) {CarsDAO.updateCarMerke(regnr.getText(), merkefelt.getText());}
-                if (!Objects.equals(modellfelt.getText(), "")) {CarsDAO.updateCarModell(regnr.getText(), modellfelt.getText());}
-                if (!Objects.equals(eierfelt.getText(), "")) {CarsDAO.updateCarEier(regnr.getText(), eierfelt.getText());}
-                if (!Objects.equals(årsmodellfelt.getText(), "")) {CarsDAO.updateCarÅrsModell(regnr.getText(), Integer.parseInt(årsmodellfelt.getText()));}
-                if (!Objects.equals(fargefelt.getText(), "")) {CarsDAO.updateCarFarge(regnr.getText(), fargefelt.getText());}
-                if (!Objects.equals(områdefelt.getText(), "")) {CarsDAO.updateCarOmråde(regnr.getText(), områdefelt.getText());}
-                if (!Objects.equals(ledigfelt.getText(), "")) {CarsDAO.updateCarLedig(regnr.getText(), ledigfelt.getText());}
-                if (!Objects.equals(ledigdatofelt.getText(), "")) {CarsDAO.updateCarledigDato(regnr.getText(), ledigdatofelt.getText());}
-                if (!Objects.equals(regnr.getText(), "")) {CarsDAO.updateCarRegnr(regnr.getText(), regnr.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[0]), merkefelt.getText())) {CarsDAO.updateCarMerke(regnr.getText(), merkefelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[1]), modellfelt.getText())) {CarsDAO.updateCarModell(regnr.getText(), modellfelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[2]), eierfelt.getText())) {CarsDAO.updateCarEier(regnr.getText(), eierfelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[3]), årsmodellfelt.getText())) {CarsDAO.updateCarÅrsModell(regnr.getText(), Integer.parseInt(årsmodellfelt.getText()));}
+                if (!Objects.equals(rs.getString(collumnNames[4]), fargefelt.getText())) {CarsDAO.updateCarFarge(regnr.getText(), fargefelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[5]), områdefelt.getText())) {CarsDAO.updateCarOmråde(regnr.getText(), områdefelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[6]), ledigfelt.getText())) {CarsDAO.updateCarLedig(regnr.getText(), ledigfelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[7]), ledigdatofelt.getText())) {CarsDAO.updateCarledigDato(regnr.getText(), ledigdatofelt.getText());}
+                if (!Objects.equals(rs.getString(collumnNames[8]), regnr.getText())) {CarsDAO.updateCarRegnr(regnr.getText(), regnr.getText());}
             }
 
         }

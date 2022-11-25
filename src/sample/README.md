@@ -1,5 +1,3 @@
-**Articles**:
+Frankensteis Code
 
-https://www.swtestacademy.com/getting-started-with-javafx/
-
-https://www.swtestacademy.com/database-operations-javafx/
+Is working 50% of the time
